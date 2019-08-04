@@ -1,0 +1,10 @@
+version: '3.4'
+services:
+
+  swoole-worker:
+    image: "aleksajo/swoole-worker"
+    volumes:
+      - ./.docker:/etc/supervisor/conf.d
+    restart: always
+    command: /usr/bin/supervisord -c /etc/supervisor/supervisord.conf
+
