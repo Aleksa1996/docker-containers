@@ -1,0 +1,11 @@
+version: '3.4'
+services:
+  swoole-watcher:
+    image: "aleksajo/swoole-watcher"
+    volumes:
+      - '/var/run/docker.sock:/tmp/docker.sock:ro'
+      - '/mnt/projects/ytd:/var/www/html'
+    restart: always
+    environment:
+      - 'CONTAINER=ytd_swoole_1'
+      - 'VOLUMES=/var/www/html'
