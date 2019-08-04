@@ -30,7 +30,9 @@ inotifywait -m "${VOLUMES}" -e "${INOTIFY_EVENTS_DEFAULT}" -r --format '%f %e %T
                 sleep 1  # sleep 1 set to let file operations end
                 echo "$file => $events"
                 echo "notify received, sent command ${COMMAND} to container ${CONTAINER}"
-                curl ${CURL_OPTIONS} -X POST --unix-socket /tmp/docker.sock http://docker/containers/${CONTAINER}/${COMMAND} > /dev/stdout 2> /dev/stderr
+                for CNT in ${CONTAINER//;/$'\n'} ; do
+                    curl ${CURL_OPTIONS} -X POST --unix-socket /tmp/docker.sock http://docker/containers/${CNT}/${COMMAND} > /dev/stdout 2> /dev/stderr
+                done
             fi
         fi
     done
