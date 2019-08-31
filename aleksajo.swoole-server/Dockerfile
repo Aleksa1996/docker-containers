@@ -16,8 +16,8 @@ RUN apt-get update && apt-get install -y \
     wget \
     zip \
     unzip \
-    git && \
-    nano-tiny && \
+    git \
+    nano-tiny \
     cron && \
     apt autoremove && apt clean
 
@@ -66,5 +66,8 @@ RUN cd /root && \
     echo "swoole.fast_serialize=On" >> /usr/local/etc/php/conf.d/docker-php-ext-swoole-serialize.ini && \
     rm -rf /tmp/*
 
-RUN service cron start
+
 RUN mkdir -p /var/www/html
+WORKDIR /var/www/html
+
+RUN (crontab -l ; echo "* * * * * cd /var/www/html && /usr/local/bin/php artisan schedule:run >> /dev/null 2>&1") | crontab
