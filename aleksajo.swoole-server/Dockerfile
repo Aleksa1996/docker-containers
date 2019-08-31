@@ -17,6 +17,8 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     git && \
+    nano-tiny && \
+    cron && \
     apt autoremove && apt clean
 
 # install php pdo_mysql opcache
@@ -64,4 +66,5 @@ RUN cd /root && \
     echo "swoole.fast_serialize=On" >> /usr/local/etc/php/conf.d/docker-php-ext-swoole-serialize.ini && \
     rm -rf /tmp/*
 
+RUN service cron start
 RUN mkdir -p /var/www/html
